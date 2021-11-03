@@ -29,8 +29,10 @@ $smarty->registerPlugin('function', $urlPlugin->getName(), [$urlPlugin, 'execute
 
 To generate url for named route:
 ```smarty
-<a href="{url "ROUTE_NAME" ["PARAMS"]}">go there</a>
+<a href="{url name='ROUTE_NAME' attributes=['p1'=>'v1']}">go there</a>
 ```
+
+`attributes` can be used also as shortcut `attr` or not used at all. 
 
 ## How to contribute?
 

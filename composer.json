@@ -1,0 +1,22 @@
+{
+    "name": "imponeer/smarty-sunrise-http-router",
+    "description": "Smarty extensions to use with amazing router from sunrise-php",
+    "type": "library",
+    "require": {
+        "imponeer/smarty-extensions-contracts": "^1.0",
+        "php": ">=7.2",
+        "sunrise/http-router": "^2"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Raimondas Rimkevičius (aka MekDrop)",
+            "email": "github@mekdrop.name"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Imponeer\\Smarty\\Extensions\\SunriseHTTPRouter\\": "src/"
+        }
+    }
+}
