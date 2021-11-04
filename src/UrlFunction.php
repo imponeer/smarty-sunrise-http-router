@@ -12,7 +12,7 @@ use Sunrise\Http\Router\Router;
  *
  * @package Imponeer\Smarty\Extensions\SunriseHTTPRouter
  */
-class Url implements SmartyFunctionInterface
+class UrlFunction implements SmartyFunctionInterface
 {
     /**
      * @var Router

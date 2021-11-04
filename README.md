@@ -21,7 +21,7 @@ Otherwise, you need to include manually files from `src/` directory.
 If you want to use these extensions from this package in your project you need register them with [`registerPlugin` function](https://www.smarty.net/docs/en/api.register.plugin.tpl) from [Smarty](https://www.smarty.net). For example:
 ```php
 $smarty = new \Smarty();
-$urlPlugin = new \Imponeer\Smarty\Extensions\SunriseHTTPRouter\Url($router);
+$urlPlugin = new \Imponeer\Smarty\Extensions\SunriseHTTPRouter\UrlFunction($router);
 $smarty->registerPlugin('function', $urlPlugin->getName(), [$urlPlugin, 'execute']);
 ```
 
@@ -32,7 +32,7 @@ To generate url for named route:
 <a href="{url name='ROUTE_NAME' attributes=['p1'=>'v1']}">go there</a>
 ```
 
-`attributes` can be used also as shortcut `attr` or not used at all. 
+`attributes` can be used also as shortcut `attr` or not used at all. This param maybe needed depending on a route.
 
 ## How to contribute?
 
