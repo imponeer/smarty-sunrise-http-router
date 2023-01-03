@@ -3,7 +3,7 @@
     "description": "Smarty extensions to use with amazing router from sunrise-php",
     "type": "library",
     "require": {
-        "imponeer/smarty-extensions-contracts": "^2.0",
+        "imponeer/smarty-extensions-contracts": "^3.0",
         "php": "^7.3 || ^8.0",
         "sunrise/http-router": "^2"
     },
@@ -20,7 +20,6 @@
         }
     },
     "require-dev": {
-        "smarty/smarty": "^4.3",
         "phpunit/phpunit": "^8"
     },
     "scripts": {
