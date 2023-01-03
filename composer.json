@@ -18,5 +18,12 @@
         "psr-4": {
             "Imponeer\\Smarty\\Extensions\\SunriseHTTPRouter\\": "src/"
         }
+    },
+    "require-dev": {
+        "smarty/smarty": "^4.3",
+        "phpunit/phpunit": "^8"
+    },
+    "scripts": {
+        "test": "phpunit --testdox"
     }
 }

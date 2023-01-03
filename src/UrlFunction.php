@@ -42,7 +42,7 @@ class UrlFunction implements SmartyFunctionInterface
      *
      * @throws SmartyException
      */
-    public function execute($params, Smarty_Internal_Template &$template)
+    public function execute($params, Smarty_Internal_Template $template)
     {
         $attributes = [];
         if (isset($params['attr'])) {
