@@ -13,11 +13,10 @@ jobs:
       max-parallel: 3
       matrix:
         php:
-          - 7.3
-          - 7.4
           - 8.0
           - 8.1
           - 8.2
+          - 8.3
     name: Test - php:${{ matrix.php }}; composer:${{ matrix.composer }}
     steps:
       - name: Checkout
