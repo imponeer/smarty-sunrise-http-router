@@ -4,10 +4,11 @@
     "type": "library",
     "require": {
         "imponeer/smarty-extensions-contracts": "^3.0",
-        "php": "^7.3 || ^8.0",
+        "php": "^8.1",
         "sunrise/http-router": "^3"
     },
     "license": "MIT",
+    "minimum-stability": "beta",
     "authors": [
         {
             "name": "Raimondas Rimkevičius (aka MekDrop)",
