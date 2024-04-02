@@ -55,6 +55,6 @@ class UrlFunction implements SmartyFunctionInterface
             throw new SmartyException('name not set for url function');
         }
 
-        return $this->router->generateUri($params['name'], $attributes);
+        return $this->router->buildRoute($params['name'], $attributes);
     }
 }

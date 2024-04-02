@@ -2,10 +2,9 @@
 
 use Imponeer\Smarty\Extensions\SunriseHTTPRouter\UrlFunction;
 use PHPUnit\Framework\TestCase;
-use Sunrise\Http\Router\Exception\MissingAttributeValueException;
-use Sunrise\Http\Router\Exception\RouteNotFoundException;
+use Sunrise\Http\Router\Exception\InvalidRouteBuildingValueException;
+use Sunrise\Http\Router\Exception\NoRouteFoundException;
 use Sunrise\Http\Router\Route;
-use Sunrise\Http\Router\RouteCollector;
 use Sunrise\Http\Router\Router;
 
 class UrlFunctionTest extends TestCase
@@ -21,17 +20,18 @@ class UrlFunctionTest extends TestCase
 
     protected function setUp(): void
     {
-        $collector = new RouteCollector();
-        $collector->get("home", "/", function ($request) {
-            return "test";
-        });
-        $collector->get("test", "/test/{a}", function ($request) {
-            return "test 2";
-        });
-
-        $router = new Router();
+        $router = new Sunrise\Http\Router\Router();
         $router->addRoute(
-            ...$collector->getCollection()->all()
+            new Route("home", "/", function ($request) {
+                return "test";
+            }, [
+                "GET"
+            ]),
+            new Route("test",  "/test/{a}", function ($request) {
+                return "test 2";
+            }, [
+                "GET"
+            ]),
         );
 
         $this->plugin = new UrlFunction($router);
@@ -63,7 +63,7 @@ class UrlFunctionTest extends TestCase
     public function testInvokingWithIncorrectAttributes() {
         $src = urlencode('{url name="test" attributes=["b" => "x"]}');
 
-        $this->expectException(MissingAttributeValueException::class);
+        $this->expectException(InvalidRouteBuildingValueException::class);
         $this->smarty->fetch('eval:urlencode:'.$src);
     }
 
@@ -76,7 +76,7 @@ class UrlFunctionTest extends TestCase
     public function testInvokingWithInvalidRouteName() {
         $src = urlencode('{url name="home2"}');
 
-        $this->expectException(RouteNotFoundException::class);
+        $this->expectException(NoRouteFoundException::class);
         $this->smarty->fetch('eval:urlencode:'.$src);
     }
 
