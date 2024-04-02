@@ -5,7 +5,7 @@
     "require": {
         "imponeer/smarty-extensions-contracts": "^3.0",
         "php": "^7.3 || ^8.0",
-        "sunrise/http-router": "^2"
+        "sunrise/http-router": "^3"
     },
     "license": "MIT",
     "authors": [
