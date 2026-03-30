@@ -1,10 +1,9 @@
-[![License](https://img.shields.io/github/license/imponeer/smarty-sunrise-http-router.svg)](LICENSE)
-[![GitHub release](https://img.shields.io/github/release/imponeer/smarty-sunrise-http-router.svg)](https://github.com/imponeer/smarty-sunrise-http-router/releases) [![PHP](https://img.shields.io/packagist/php-v/imponeer/smarty-sunrise-http-router.svg)](http://php.net) 
-[![Packagist](https://img.shields.io/packagist/dm/imponeer/smarty-sunrise-http-router.svg)](https://packagist.org/packages/imponeer/smarty-sunrise-http-router)
+[![License](https://img.shields.io/github/license/imponeer/smarty-sunrise-http-router.svg)](LICENSE) [![GitHub release](https://img.shields.io/github/release/imponeer/smarty-sunrise-http-router.svg)](https://github.com/imponeer/smarty-sunrise-http-router/releases) [![PHP](https://img.shields.io/packagist/php-v/imponeer/smarty-sunrise-http-router.svg)](http://php.net) [![Packagist](https://img.shields.io/packagist/dm/imponeer/smarty-sunrise-http-router.svg)](https://packagist.org/packages/imponeer/smarty-sunrise-http-router) [![Smarty version requirement](https://img.shields.io/packagist/dependency-v/imponeer/smarty-sunrise-http-router/smarty%2Fsmarty)](https://smarty-php.github.io)
 
-# Smarty Sunrise HTTP Router Extensions
+# Smarty Sunrise HTTP Router
 
-This library adds some `url` function that generates named route for [Sunrise HTTP Router](https://github.com/sunrise-php/http-router).
+This library exposes Sunrise HTTP Router named routes to Smarty through a `{url}` template function, allowing templates to generate links without hardcoding paths.
+It is designed for applications that keep routing logic in [Sunrise HTTP Router](https://github.com/sunrise-php/http-router) and want those routes available directly inside Smarty views.
 
 ## Installation
 
@@ -14,34 +13,135 @@ To install and use this package, we recommend to use [Composer](https://getcompo
 composer require imponeer/smarty-sunrise-http-router
 ```
 
-Otherwise, you need to include manually files from `src/` directory. 
+Otherwise, you need to include manually files from `src/` directory.
 
-## Registering in Smarty
+## Setup
 
-If you want to use these extensions from this package in your project you need to add them as a native [Smarty 5](https://www.smarty.net/) extension:
+### Modern Smarty Extension (Recommended)
+
+Register the extension with your Smarty instance and provide a configured router:
+
 ```php
+use Imponeer\Smarty\Extensions\SunriseHTTPRouter\SunriseHttpRouterExtension;
+use Sunrise\Http\Router\RouterInterface;
+
+// $router is a configured Sunrise\Http\Router\RouterInterface instance
+$router = $container->get(RouterInterface::class);
+
 $smarty = new \Smarty\Smarty();
-$extension = new \Imponeer\Smarty\Extensions\SunriseHTTPRouter\SunriseHttpRouterExtension($router);
-$smarty->addExtension($extension);
+$smarty->addExtension(new SunriseHttpRouterExtension($router));
 ```
 
-## Using from templates
+### Using with Dependency Injection Containers
 
-To generate url for named route:
+#### Symfony Container
+
+```yaml
+# config/services.yaml
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    Imponeer\Smarty\Extensions\SunriseHTTPRouter\SunriseHttpRouterExtension:
+        arguments:
+            - '@Sunrise\Http\Router\RouterInterface'
+
+    \Smarty\Smarty:
+        calls:
+            - [addExtension, ['@Imponeer\Smarty\Extensions\SunriseHTTPRouter\SunriseHttpRouterExtension']]
+```
+
+#### PHP-DI Container
+
+```php
+use Imponeer\Smarty\Extensions\SunriseHTTPRouter\SunriseHttpRouterExtension;
+use Sunrise\Http\Router\RouterInterface;
+use function DI\create;
+use function DI\get;
+
+return [
+    SunriseHttpRouterExtension::class => create()->constructor(get(RouterInterface::class)),
+    \Smarty\Smarty::class => create()->method('addExtension', get(SunriseHttpRouterExtension::class)),
+];
+```
+
+#### League Container
+
+```php
+use Imponeer\Smarty\Extensions\SunriseHTTPRouter\SunriseHttpRouterExtension;
+use Sunrise\Http\Router\RouterInterface;
+
+$container = new \League\Container\Container();
+
+$container->add(RouterInterface::class, function () {
+    // Build and return your RouterInterface implementation
+});
+
+$container->add(\Smarty\Smarty::class, function () use ($container) {
+    $smarty = new \Smarty\Smarty();
+    $smarty->addExtension(new SunriseHttpRouterExtension($container->get(RouterInterface::class)));
+
+    return $smarty;
+});
+```
+
+## Usage
+
+The `{url}` function renders a URL for a named route defined in Sunrise HTTP Router.
+
+### Generate a route URL
+
 ```smarty
-<a href="{url name='ROUTE_NAME' attributes=['p1'=>'v1']}">go there</a>
+{url name="home"}
 ```
 
-`attributes` can be used also as shortcut `attr` or not used at all. This param maybe needed depending on a route.
+### Passing route attributes
 
-## How to contribute?
+```smarty
+{url name="article" attributes=["slug" => "introduction-to-router"]}
+{* or the shorter alias *}
+{url name="article" attr=["slug" => "introduction-to-router"]}
+```
 
-We welcome bug reports, questions, and pull requests.
+### Handling missing attributes
 
-- Check existing [issues](https://github.com/imponeer/smarty-sunrise-http-router/issues) and open a new one if you want to propose changes or report a problem (please include steps to reproduce when relevant).
-- Fork the repository and create a branch for your change.
-- Install development dependencies with `composer install` and run the test suite with `composer test` to ensure everything passes before and after your edits.
-- Keep changes focused; when you modify behavior, add or adjust tests in `tests/` to cover it.
-- Open a pull request describing what changed and why.
+If required route attributes are not provided or the route name does not exist, the router will throw an exception so you can catch and handle the error in your application.
 
-If you are new to contributing on GitHub, start with the official guide: [Contributing to projects](https://docs.github.com/en/get-started/quickstart/contributing-to-projects).
+## Development
+
+### Code Quality Tools
+
+- **PHPUnit** - For unit testing
+  ```bash
+  composer test
+  ```
+
+- **PHP CodeSniffer** - For coding standards (PSR-12)
+  ```bash
+  composer phpcs    # Check code style
+  composer phpcbf   # Fix code style issues automatically
+  ```
+
+- **PHPStan** - For static analysis
+  ```bash
+  composer phpstan
+  ```
+
+## Documentation
+
+Routes are defined and built using [Sunrise HTTP Router](https://github.com/sunrise-php/http-router), and Smarty extension details are available in the [Smarty documentation](https://www.smarty.net/docs/en/). Review those resources for deeper customization tips.
+
+## Contributing
+
+Contributions are welcome! Here's how you can contribute:
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature-name`
+3. Commit your changes: `git commit -am 'Add some feature'`
+4. Push to the branch: `git push origin feature-name`
+5. Submit a pull request
+
+Please make sure your code follows the PSR-12 coding standard and include tests for any new features or bug fixes.
+
+If you find a bug or have a feature request, please create an issue in the [issue tracker](https://github.com/imponeer/smarty-sunrise-http-router/issues).
