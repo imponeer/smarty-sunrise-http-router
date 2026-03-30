@@ -2,59 +2,45 @@
 
 namespace Imponeer\Smarty\Extensions\SunriseHTTPRouter;
 
-use Imponeer\Contracts\Smarty\Extension\SmartyFunctionInterface;
-use Smarty_Internal_Template;
-use SmartyException;
-use Sunrise\Http\Router\Router;
+use Smarty\Exception;
+use Smarty\FunctionHandler\FunctionHandlerInterface;
+use Smarty\Template;
+use Sunrise\Http\Router\RouterInterface;
 
 /**
  * Defines smarty url function
  *
  * @package Imponeer\Smarty\Extensions\SunriseHTTPRouter
  */
-class UrlFunction implements SmartyFunctionInterface
+class UrlFunction implements FunctionHandlerInterface
 {
-    /**
-     * @var Router
-     */
-    private $router;
-
     /**
      * Url constructor.
      *
-     * @param Router $router
+     * @param RouterInterface $router
      */
-    public function __construct(Router $router)
-    {
-        $this->router = $router;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getName(): string
-    {
-        return 'url';
-    }
+    public function __construct(
+        private readonly RouterInterface $router
+    ) {}
 
     /**
      * @inheritDoc
      *
-     * @throws SmartyException
+     * @throws Exception
      */
-    public function execute($params, Smarty_Internal_Template $template)
+    public function handle($params, Template $template)
     {
-        $attributes = [];
-        if (isset($params['attr'])) {
-            $attributes = (array)$params['attr'];
-        } elseif (isset($params['attributes'])) {
-            $attributes = (array)$params['attributes'];
-        }
+        $attributes = (array)($params['attr'] ?? $params['attributes'] ?? []);
 
         if (!isset($params['name'])) {
-            throw new SmartyException('name not set for url function');
+            throw new Exception('name not set for url function');
         }
 
         return $this->router->buildRoute($params['name'], $attributes);
+    }
+
+    public function isCacheable(): bool
+    {
+        return true;
     }
 }

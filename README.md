@@ -18,11 +18,11 @@ Otherwise, you need to include manually files from `src/` directory.
 
 ## Registering in Smarty
 
-If you want to use these extensions from this package in your project you need register them with [`registerPlugin` function](https://www.smarty.net/docs/en/api.register.plugin.tpl) from [Smarty](https://www.smarty.net). For example:
+If you want to use these extensions from this package in your project you need to add them as a native [Smarty 5](https://www.smarty.net/) extension:
 ```php
-$smarty = new \Smarty();
-$urlPlugin = new \Imponeer\Smarty\Extensions\SunriseHTTPRouter\UrlFunction($router);
-$smarty->registerPlugin('function', $urlPlugin->getName(), [$urlPlugin, 'execute']);
+$smarty = new \Smarty\Smarty();
+$extension = new \Imponeer\Smarty\Extensions\SunriseHTTPRouter\SunriseHttpRouterExtension($router);
+$smarty->addExtension($extension);
 ```
 
 ## Using from templates
