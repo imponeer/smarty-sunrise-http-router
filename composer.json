@@ -22,10 +22,12 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^8 || ^9 || ^10",
-        "squizlabs/php_codesniffer": "^4.0"
+        "squizlabs/php_codesniffer": "^4.0",
+        "phpstan/phpstan": "^2.0"
     },
     "scripts": {
         "test": "phpunit --testdox",
-        "phpcs": "phpcs"
+        "phpcs": "phpcs",
+        "phpstan": "phpstan analyse"
     }
 }
