@@ -44,4 +44,4 @@ We welcome bug reports, questions, and pull requests.
 - Keep changes focused; when you modify behavior, add or adjust tests in `tests/` to cover it.
 - Open a pull request describing what changed and why.
 
-If you are new to contributing on GitHub, the [interactive GitHub tutorial](https://skills.github.com) is a good place to start.
+If you are new to contributing on GitHub, start with the official guide: [Contributing to projects](https://docs.github.com/en/get-started/quickstart/contributing-to-projects).
