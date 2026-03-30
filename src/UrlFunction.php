@@ -36,7 +36,9 @@ class UrlFunction implements FunctionHandlerInterface
             throw new Exception('name not set for url function');
         }
 
-        return $this->router->buildRoute($params['name'], $attributes);
+        $route = $this->router->getRoute($params['name']);
+
+        return $this->router->buildRoute($route, $attributes);
     }
 
     public function isCacheable(): bool
