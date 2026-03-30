@@ -40,6 +40,7 @@ class UrlFunction implements SmartyFunctionInterface
     /**
      * @inheritDoc
      *
+     * @param array<string, mixed> $params
      * @throws SmartyException
      */
     public function execute($params, Smarty_Internal_Template $template)

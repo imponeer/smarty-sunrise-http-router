@@ -9,6 +9,19 @@
     },
     "license": "MIT",
     "minimum-stability": "beta",
+    "config": {
+        "preferred-install": {
+            "phpstan/phpstan": "source"
+        }
+    },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/phpstan/phpstan.git",
+            "no-api": true,
+            "canonical": false
+        }
+    ],
     "authors": [
         {
             "name": "Raimondas Rimkevičius (aka MekDrop)",
@@ -21,9 +34,11 @@
         }
     },
     "require-dev": {
-        "phpunit/phpunit": "^8 || ^9 || ^10"
+        "phpunit/phpunit": "^8 || ^9 || ^10",
+        "phpstan/phpstan": "^2.1"
     },
     "scripts": {
-        "test": "phpunit --testdox"
+        "test": "phpunit --testdox",
+        "phpstan": "phpstan analyse -c phpstan.neon.dist"
     }
 }

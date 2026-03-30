@@ -34,6 +34,14 @@ To generate url for named route:
 
 `attributes` can be used also as shortcut `attr` or not used at all. This param maybe needed depending on a route.
 
+## Static analysis
+
+Run PHPStan with the bundled config:
+
+```bash
+composer phpstan
+```
+
 ## How to contribute?
 
 If you want to add some functionality or fix bugs, you can fork, change and create pull request. If you not sure how this works, try [interactive GitHub tutorial](https://skills.github.com).
