@@ -18,11 +18,11 @@ Otherwise, you need to include manually files from `src/` directory.
 
 ## Registering in Smarty
 
-If you want to use these extensions from this package in your project you need register them with [`registerPlugin` function](https://www.smarty.net/docs/en/api.register.plugin.tpl) from [Smarty](https://www.smarty.net). For example:
+If you want to use these extensions from this package in your project you need to add them as a native [Smarty 5](https://www.smarty.net/) extension:
 ```php
-$smarty = new \Smarty();
-$urlPlugin = new \Imponeer\Smarty\Extensions\SunriseHTTPRouter\UrlFunction($router);
-$smarty->registerPlugin('function', $urlPlugin->getName(), [$urlPlugin, 'execute']);
+$smarty = new \Smarty\Smarty();
+$extension = new \Imponeer\Smarty\Extensions\SunriseHTTPRouter\SunriseHttpRouterExtension($router);
+$smarty->addExtension($extension);
 ```
 
 ## Using from templates
@@ -44,6 +44,12 @@ composer phpstan
 
 ## How to contribute?
 
-If you want to add some functionality or fix bugs, you can fork, change and create pull request. If you not sure how this works, try [interactive GitHub tutorial](https://skills.github.com).
+We welcome bug reports, questions, and pull requests.
 
-If you found any bug or have some questions, use [issues tab](https://github.com/imponeer/smarty-sunrise-http-router/issues) and write there your questions.
+- Check existing [issues](https://github.com/imponeer/smarty-sunrise-http-router/issues) and open a new one if you want to propose changes or report a problem (please include steps to reproduce when relevant).
+- Fork the repository and create a branch for your change.
+- Install development dependencies with `composer install` and run the test suite with `composer test` to ensure everything passes before and after your edits.
+- Keep changes focused; when you modify behavior, add or adjust tests in `tests/` to cover it.
+- Open a pull request describing what changed and why.
+
+If you are new to contributing on GitHub, start with the official guide: [Contributing to projects](https://docs.github.com/en/get-started/quickstart/contributing-to-projects).

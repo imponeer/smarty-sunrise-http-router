@@ -3,8 +3,8 @@
     "description": "Smarty extensions to use with amazing router from sunrise-php",
     "type": "library",
     "require": {
-        "imponeer/smarty-extensions-contracts": "^3.0",
         "php": "^8.1",
+        "smarty/smarty": "^5",
         "sunrise/http-router": "^3"
     },
     "license": "MIT",
@@ -14,14 +14,6 @@
             "phpstan/phpstan": "source"
         }
     },
-    "repositories": [
-        {
-            "type": "git",
-            "url": "https://github.com/phpstan/phpstan.git",
-            "no-api": true,
-            "canonical": false
-        }
-    ],
     "authors": [
         {
             "name": "Raimondas Rimkevičius (aka MekDrop)",
@@ -35,10 +27,12 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^8 || ^9 || ^10",
-        "phpstan/phpstan": "^2.1"
+        "phpstan/phpstan": "^2.1",
+        "squizlabs/php_codesniffer": "^4.0"
     },
     "scripts": {
         "test": "phpunit --testdox",
-        "phpstan": "phpstan analyse -c phpstan.neon.dist"
+        "phpstan": "phpstan analyse -c phpstan.neon.dist",
+        "phpcs": "phpcs"
     }
 }
