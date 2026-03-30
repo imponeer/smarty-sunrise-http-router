@@ -27,9 +27,10 @@ class UrlFunction implements FunctionHandlerInterface
     /**
      * @inheritDoc
      *
+     * @param array<string, mixed> $params
      * @throws Exception
      */
-    public function handle(array $params, Template $template): string
+    public function handle(mixed $params, Template $template): string
     {
         $attributes = (array)($params['attr'] ?? $params['attributes'] ?? []);
 
