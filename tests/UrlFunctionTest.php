@@ -1,5 +1,7 @@
 <?php
 
+namespace Imponeer\Smarty\Extensions\SunriseHTTPRouter\Tests;
+
 use Imponeer\Smarty\Extensions\SunriseHTTPRouter\SunriseHttpRouterExtension;
 use PHPUnit\Framework\TestCase;
 use Smarty\Smarty;
