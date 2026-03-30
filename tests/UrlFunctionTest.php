@@ -35,6 +35,9 @@ class UrlFunctionTest extends TestCase
     private function createRouterWithRoutes(Route ...$routes): RouterInterface
     {
         $loader = new class ($routes) implements LoaderInterface {
+            /**
+             * @param Route[] $routes
+             */
             public function __construct(private array $routes)
             {
             }

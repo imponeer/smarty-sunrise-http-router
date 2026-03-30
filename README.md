@@ -41,6 +41,7 @@ We welcome bug reports, questions, and pull requests.
 - Check existing [issues](https://github.com/imponeer/smarty-sunrise-http-router/issues) and open a new one if you want to propose changes or report a problem (please include steps to reproduce when relevant).
 - Fork the repository and create a branch for your change.
 - Install development dependencies with `composer install` and run the test suite with `composer test` to ensure everything passes before and after your edits.
+- Run static analysis with `composer phpstan`.
 - Keep changes focused; when you modify behavior, add or adjust tests in `tests/` to cover it.
 - Open a pull request describing what changed and why.
 
