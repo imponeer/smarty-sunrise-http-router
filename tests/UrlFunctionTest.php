@@ -1,11 +1,14 @@
 <?php
 
+namespace Imponeer\Smarty\Extensions\SunriseHTTPRouter\Tests;
+
 use Imponeer\Smarty\Extensions\SunriseHTTPRouter\UrlFunction;
 use PHPUnit\Framework\TestCase;
 use Sunrise\Http\Router\Exception\InvalidRouteBuildingValueException;
 use Sunrise\Http\Router\Exception\NoRouteFoundException;
 use Sunrise\Http\Router\Route;
 use Sunrise\Http\Router\Router;
+use Smarty;
 
 class UrlFunctionTest extends TestCase
 {
@@ -20,14 +23,14 @@ class UrlFunctionTest extends TestCase
 
     protected function setUp(): void
     {
-        $router = new Sunrise\Http\Router\Router();
+        $router = new Router();
         $router->addRoute(
             new Route("home", "/", function ($request) {
                 return "test";
             }, [
                 "GET"
             ]),
-            new Route("test",  "/test/{a}", function ($request) {
+            new Route("test", "/test/{a}", function ($request) {
                 return "test 2";
             }, [
                 "GET"
@@ -47,37 +50,41 @@ class UrlFunctionTest extends TestCase
         parent::setUp();
     }
 
-    public function testGetName() {
+    public function testGetName()
+    {
         $this->assertSame('url', $this->plugin->getName());
     }
 
-    public function testInvokingWithCorrectAttributes() {
+    public function testInvokingWithCorrectAttributes()
+    {
         $src = urlencode('{url name="test" attributes=["a" => "b"]}');
-        $ret = $this->smarty->fetch('eval:urlencode:'.$src);
+        $ret = $this->smarty->fetch('eval:urlencode:' . $src);
         $this->assertSame("/test/b", $ret);
     }
 
     /**
      * @fail
      */
-    public function testInvokingWithIncorrectAttributes() {
+    public function testInvokingWithIncorrectAttributes()
+    {
         $src = urlencode('{url name="test" attributes=["b" => "x"]}');
 
         $this->expectException(InvalidRouteBuildingValueException::class);
-        $this->smarty->fetch('eval:urlencode:'.$src);
+        $this->smarty->fetch('eval:urlencode:' . $src);
     }
 
-    public function testInvokingWithoutAttributes() {
+    public function testInvokingWithoutAttributes()
+    {
         $src = urlencode('{url name="home"}');
-        $ret = $this->smarty->fetch('eval:urlencode:'.$src);
+        $ret = $this->smarty->fetch('eval:urlencode:' . $src);
         $this->assertSame("/", $ret);
     }
 
-    public function testInvokingWithInvalidRouteName() {
+    public function testInvokingWithInvalidRouteName()
+    {
         $src = urlencode('{url name="home2"}');
 
         $this->expectException(NoRouteFoundException::class);
-        $this->smarty->fetch('eval:urlencode:'.$src);
+        $this->smarty->fetch('eval:urlencode:' . $src);
     }
-
 }
