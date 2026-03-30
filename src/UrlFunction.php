@@ -29,7 +29,7 @@ class UrlFunction implements FunctionHandlerInterface
      *
      * @throws Exception
      */
-    public function handle($params, Template $template)
+    public function handle(array $params, Template $template): string
     {
         $attributes = (array)($params['attr'] ?? $params['attributes'] ?? []);
 
