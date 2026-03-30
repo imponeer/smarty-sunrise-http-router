@@ -21,7 +21,8 @@ class UrlFunction implements FunctionHandlerInterface
      */
     public function __construct(
         private readonly RouterInterface $router
-    ) {}
+    ) {
+    }
 
     /**
      * @inheritDoc
